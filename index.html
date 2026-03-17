@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f766e">
+  <meta name="description" content="Find out why you're not receiving government subsidy and what to do next">
+  <title>DBT Fix Assistant</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a href="#step-content" class="skip-link">Skip to questions</a>
+
+  <header class="header" role="banner">
+    <div class="header-inner">
+      <h1 class="logo">DBT Fix Assistant</h1>
+      <button type="button" class="lang-switcher" aria-label="Change language" aria-haspopup="true">
+        <span class="lang-current">EN</span>
+        <span class="lang-icon" aria-hidden="true">▼</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content" class="main" role="main">
+    <!-- Step container: one question per screen -->
+    <section class="step-section" aria-label="Answer questions to get your action plan">
+      <div class="step-container" id="step-container">
+        <!-- Progress indicator -->
+        <div class="step-progress" aria-hidden="true">
+          <span class="step-progress-text" id="step-progress-text">Step 1 of 4</span>
+        </div>
+
+        <!-- Step content: question + choices -->
+        <div class="step-content" id="step-content" role="region" aria-live="polite">
+          <h2 class="step-question" id="step-question">
+            Are you receiving any government subsidy?
+          </h2>
+          <div class="step-choices" id="step-choices" role="group">
+            <button type="button" class="choice-btn" data-value="yes_regularly">Yes, regularly</button>
+            <button type="button" class="choice-btn" data-value="stopped_recently">It stopped recently</button>
+            <button type="button" class="choice-btn" data-value="never_received">Never received</button>
+            <button type="button" class="choice-btn" data-value="dont_know">I don't know</button>
+          </div>
+        </div>
+
+        <!-- Navigation: Back only (choices advance) -->
+        <nav class="step-nav" aria-label="Step navigation">
+          <button type="button" class="nav-btn back-btn" id="back-btn" disabled aria-label="Go back">
+            ← Back
+          </button>
+        </nav>
+      </div>
+    </section>
+
+    <!-- Result: Action plan (hidden until engine produces output) -->
+    <section class="result-section" id="result-section" role="region" aria-live="polite" hidden>
+      <div class="result-container" id="result-container">
+        <!-- Filled by ui.js from engine output -->
+        <div class="action-plan" id="action-plan">
+          <h2 class="result-title">Your Action Plan</h2>
+          <div class="result-problem" id="result-problem"></div>
+          <div class="result-steps" id="result-steps"></div>
+          <div class="result-say" id="result-say"></div>
+          <div class="result-where" id="result-where"></div>
+          <div class="result-time" id="result-time"></div>
+        </div>
+        <button type="button" class="restart-btn" id="restart-btn">Start again</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Language menu -->
+  <div id="lang-menu" class="lang-menu" role="menu" aria-label="Select language" hidden>
+    <button type="button" class="lang-option" role="menuitem" data-lang="en">English</button>
+    <button type="button" class="lang-option" role="menuitem" data-lang="hi">हिन्दी</button>
+    <button type="button" class="lang-option" role="menuitem" data-lang="ta">தமிழ்</button>
+  </div>
+
+  <script src="storage.js"></script>
+  <script src="engine.js"></script>
+  <script src="ui.js"></script>
+</body>
+</html>
