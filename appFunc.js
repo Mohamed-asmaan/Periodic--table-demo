@@ -1,8 +1,20 @@
+/**
+ * appFunc.js - Periodic Table Grid Rendering
+ * =========================================
+ * Renders the periodic table grid from ELEMENTS array (elements-data.js).
+ * Run BEFORE app.js (load order in index.html).
+ * - getElementCategory: maps element to category for CSS color (alkali, halogen, etc.)
+ * - renderElement: builds 18x10 grid, fills cells with symbol + atomic number
+ */
+
+// Elements data from elements-data.js (must be loaded first)
 let elements = ELEMENTS;
-let periodicTableGrid = document.getElementById('periodicTable')
+let periodicTableGrid = document.getElementById('periodicTable');
 
-
-// Element category for periodic table colors (standard IUPAC-style)
+/**
+ * Returns element category for CSS styling (IUPAC-style colors).
+ * Uses atomic number and group to determine: alkali, alkaline-earth, transition, etc.
+ */
 function getElementCategory(el) {
     const n = el.atomicNumber;
     const g = el.group;
@@ -20,16 +32,20 @@ function getElementCategory(el) {
 }
 
 
+/**
+ * Renders the periodic table grid.
+ * - Builds lookup map: (xpos, ypos) -> element
+ * - Loops 18 cols x 10 rows (standard layout)
+ * - Empty cells: visibility hidden (keeps grid alignment)
+ * - Cells get: element-cell, cat-{category}, data-symbol for search/filter
+ */
 function renderElement() {
-    const grid = {}
+    const grid = {};
 
     elements.forEach(el => {
         let keyName = `${el.xpos}-${el.ypos}`;
         grid[keyName] = el;
     });
-
-    console.log(grid);
-
 
     for (let i = 1; i <= 10; i++) {
         for (let j = 1; j <= 18; j++) {
@@ -37,28 +53,25 @@ function renderElement() {
             const element = grid[key];
 
             const cell = document.createElement("div");
-            
             cell.setAttribute('role', 'gridcell');
             cell.dataset.symbol = element ? element.symbol : '';
 
             if (element) {
-                
                 const category = getElementCategory(element);
-                cell.className = `element-cell cat-${category}`; // ✅ gives "element-cell noble-gas"
+                cell.className = `element-cell cat-${category}`;
                 cell.innerHTML = `
                 <span class="element-symbol">${element.symbol}</span>
                 <span class="element-number">${element.atomicNumber}</span>
             `;
-
             } else {
-                cell.style.visibility = "hidden"; // ✅ hide empty cells
+                cell.style.visibility = "hidden"; // Empty grid positions
             }
 
-            periodicTableGrid.appendChild(cell); // ✅ always append
+            periodicTableGrid.appendChild(cell);
         }
     }
-
 }
 
-renderElement(); // ✅ this actually runs it
+// Run on load - table is built when DOM is ready
+renderElement();
 

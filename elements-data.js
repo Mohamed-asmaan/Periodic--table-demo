@@ -1,10 +1,17 @@
 /**
- * CHEMISTRY EXAM REVISION TABLE - Element Dataset
- * ================================================
- * Complete periodic table data - all 118 elements
- * Used for: table rendering, search, study mode, quiz
- * 
- * Team member responsible: Data/Structure
+ * elements-data.js - Element Dataset
+ * ==================================
+ * Complete periodic table data - all 118 elements.
+ * MUST load before appFunc.js and app.js (defines global ELEMENTS).
+ *
+ * Each element object:
+ *   symbol, name, atomicNumber, atomicMass, group, period,
+ *   electronConfiguration, xpos, ypos
+ *
+ * xpos, ypos = grid position (1-18 cols, 1-10 rows). Used by appFunc.js
+ * to place elements in the periodic table layout.
+ *
+ * Used by: table rendering, search, study mode, quiz, comparison.
  */
 
 const ELEMENTS = [

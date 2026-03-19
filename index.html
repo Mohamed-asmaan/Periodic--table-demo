@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--
+  PERIODIC PREP - Main HTML Structure
+  ===================================
+  This file defines the page layout and all UI sections.
+  Script load order: elements-data.js (data) → appFunc.js (table render) → app.js (logic, loaded elsewhere if used)
+-->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +17,13 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- ========== HEADER ========== -->
+  <!-- HEADER: App title + tagline (tagline updates with user name after profile) -->
   <header class="header">
     <h1>Periodic Prep</h1>
     <p class="tagline" id="headerTagline">Periodic table study tool — explore, study, quiz</p>
   </header>
 
-  <!-- ========== PROFILE MODAL (First-time: name + email) ========== -->
+  <!-- PROFILE MODAL: Shown on first visit. Collects name + email, saved to localStorage. IDs: profileForm, profileName, profileEmail -->
   <div id="profileModal" class="modal" aria-hidden="true">
     <div class="modal-content profile-modal-content">
       <h2>Welcome!</h2>
@@ -38,7 +44,7 @@
     </div>
   </div>
 
-  <!-- ========== WELCOME MODAL (Tips after profile) ========== -->
+  <!-- WELCOME MODAL: Tips shown after profile creation. ID: welcomeClose to dismiss -->
   <div id="welcomeModal" class="modal" aria-hidden="true">
     <div class="modal-content">
       <h2>Welcome to Periodic Prep</h2>
@@ -54,7 +60,7 @@
     </div>
   </div>
 
-  <!-- ========== CONTINUE LEARNING BANNER ========== -->
+  <!-- CONTINUE BANNER: "Continue learning [element]?" - uses lastViewed from localStorage. IDs: continueYes, continueDismiss -->
   <div id="continueBanner" class="banner" style="display: none;">
     <span>Continue learning <strong id="continueElementName">Iron</strong>?</span>
     <div class="banner-buttons">
@@ -63,10 +69,10 @@
     </div>
   </div>
 
-  <!-- ========== MAIN CONTENT ========== -->
+  <!-- MAIN CONTENT -->
   <main class="main">
     <div class="main-grid">
-      <!-- Sticky nav: search + filters -->
+      <!-- CONTROLS NAV: Search (searchInput) + Filter (filter-btn: all/weak) + Period checkboxes (period-filter) -->
       <nav class="controls-nav">
         <div class="search-box">
           <label for="searchInput">Search</label>
@@ -111,7 +117,7 @@
         </div>
       </nav>
 
-      <!-- Top row: Periodic table | Info card (same height) -->
+      <!-- TOP ROW: Left = periodic table (periodicTable), Right = sidebar with progress, buttons, detail panel -->
       <div class="main-top-row">
         <section class="table-column">
           <div class="table-section">
@@ -137,7 +143,7 @@
             <button id="quizBtn" class="btn btn-primary">Quiz</button>
           </div>
 
-          <!-- Element Detail Panel -->
+          <!-- DETAIL PANEL: Shows element info when clicked. IDs: detailContent, detailActions, revealBtn, compareSelectBtn -->
           <section id="detailPanel" class="detail-panel" aria-label="Element details">
             <h3 class="panel-title">Element Details</h3>
             <div id="detailContent" class="detail-content">
@@ -149,7 +155,7 @@
             </div>
           </section>
 
-          <!-- Study Mode Options -->
+          <!-- STUDY MODE: Checkboxes to hide properties (atomic number, mass, electron config, group). ID: closeStudyMode -->
           <section id="studyOptions" class="study-options" style="display: none;">
             <h3>Hide properties (try to recall)</h3>
             <div class="study-checkboxes">
@@ -164,7 +170,7 @@
       </aside>
       </div>
 
-      <!-- Comparison table: full width below periodic table + info card -->
+      <!-- COMPARISON PANEL: Side-by-side compare 2 elements. IDs: comparisonTable, clearComparison, closeComparison -->
       <section id="comparisonPanel" class="comparison-panel comparison-fullwidth" style="display: none;">
         <h3>Element Comparison</h3>
         <p class="comparison-hint" id="comparisonHint">1. Click an element in the table → 2. Click "Select to Compare" below → 3. Repeat for second element</p>
@@ -176,7 +182,7 @@
       </section>
     </div>
 
-    <!-- Quiz Modal -->
+    <!-- QUIZ MODAL: Multiple choice quiz. IDs: quizQuestion, quizOptions, quizScore, quizTotal, quizClose -->
     <div id="quizModal" class="modal" aria-hidden="true">
       <div class="modal-content quiz-content">
         <h2>Quiz Mode</h2>
@@ -195,6 +201,7 @@
     <p class="footer-copy">&copy; <span id="footerYear"></span> Periodic Prep. All rights reserved.</p>
   </footer>
 
+  <!-- Scripts: elements-data.js MUST load first (defines ELEMENTS). appFunc.js renders the periodic table grid. -->
   <script src="elements-data.js"></script>
   <script src="./appFunc.js"></script>
 </body>
