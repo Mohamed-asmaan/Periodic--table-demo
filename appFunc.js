@@ -1,0 +1,64 @@
+let elements = ELEMENTS;
+let periodicTableGrid = document.getElementById('periodicTable')
+
+
+// Element category for periodic table colors (standard IUPAC-style)
+function getElementCategory(el) {
+    const n = el.atomicNumber;
+    const g = el.group;
+    if (n === 1) return 'nonmetal';
+    if (g === 1) return 'alkali';
+    if (g === 2) return 'alkaline-earth';
+    if (g >= 3 && g <= 12) return 'transition';
+    if (n >= 57 && n <= 71) return 'lanthanide';
+    if (n >= 89 && n <= 103) return 'actinide';
+    if (g === 17) return 'halogen';
+    if (g === 18) return 'noble-gas';
+    if ([5, 14, 32, 33, 51, 52, 84].includes(n)) return 'metalloid';
+    if (g >= 13 && g <= 16) return 'post-transition';
+    return 'post-transition';
+}
+
+
+function renderElement() {
+    const grid = {}
+
+    elements.forEach(el => {
+        let keyName = `${el.xpos}-${el.ypos}`;
+        grid[keyName] = el;
+    });
+
+    console.log(grid);
+
+
+    for (let i = 1; i <= 10; i++) {
+        for (let j = 1; j <= 18; j++) {
+            const key = `${j}-${i}`;
+            const element = grid[key];
+
+            const cell = document.createElement("div");
+            
+            cell.setAttribute('role', 'gridcell');
+            cell.dataset.symbol = element ? element.symbol : '';
+
+            if (element) {
+                
+                const category = getElementCategory(element);
+                cell.className = `element-cell cat-${category}`; // ✅ gives "element-cell noble-gas"
+                cell.innerHTML = `
+                <span class="element-symbol">${element.symbol}</span>
+                <span class="element-number">${element.atomicNumber}</span>
+            `;
+
+            } else {
+                cell.style.visibility = "hidden"; // ✅ hide empty cells
+            }
+
+            periodicTableGrid.appendChild(cell); // ✅ always append
+        }
+    }
+
+}
+
+renderElement(); // ✅ this actually runs it
+
